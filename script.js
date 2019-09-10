@@ -4,34 +4,12 @@ function getMonth(){
   
     return months
   }
-function getGraph2(){
-
-    $.ajax({
-
-        url: "chart2_json.php",
-        method: "GET",
-
-        success: function(data){
-
-            /* console.log("succes graph 2!");
-            console.log("data", data); */
-
-            
-            
-            
-        },
-        error: function(err){
-            console.log("errore api grafico 1");
-            
-        }
-    });
-}
 
 function getGraph1(){
 
     $.ajax({
 
-        url: "chart1_json.php",
+        url: "api_chart1.php",
         method: "GET",
 
         success: function(data){
@@ -40,8 +18,7 @@ function getGraph1(){
             console.log("data", data);
 
             printChartLine(data);
-            
-            
+        
         },
         error: function(err){
             console.log("errore api grafico 1");
@@ -88,7 +65,6 @@ function printChartLine(data){
 function init() {
     console.log("Hello World");
     getGraph1();
-    getGraph2();
 
 }
 
