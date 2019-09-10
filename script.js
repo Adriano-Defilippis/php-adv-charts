@@ -27,6 +27,42 @@ function getGraph1(){
     });
 }
 
+function getGraph2(){
+
+    $.ajax({
+
+        url: "api_chart2.php",
+        method: "GET",
+
+        success: function(data){
+
+            console.log("Oggetto fatturato", data.fatturato);
+            console.log("Oggetto fatturato_by_agent", data.fatturato_by_agent);
+
+           var fatt_month = data.fatturato;
+           var fatt_by_agent = data.fatturato_by_agent;
+           
+           /* Controllo js per usare la funzione in base al 
+           tipo di grafico specificato nell'oggetto json */
+           if (fatt_month.type == "line" || fatt_by_agent == "line") {
+                
+                printChartLine(fatt_month.data);
+
+           }else if(fatt_month.type == "pie" || fatt_by_agent == "pie"){
+
+                printChartPie(fatt_by_agent.data);
+           }
+           
+            
+        
+        },
+        error: function(err){
+            console.log("errore api grafico 1");
+            
+        }
+    });
+}
+
 function printChartLine(data){
 
     var ctx = document.getElementById('myChart1').getContext('2d');
@@ -62,9 +98,15 @@ function printChartLine(data){
   });
 }
 
+function printChartPie(data){
+
+    /* TO DO....... */
+}
+
 function init() {
     console.log("Hello World");
-    getGraph1();
+   /*  getGraph1(); */
+    getGraph2();
 
 }
 
