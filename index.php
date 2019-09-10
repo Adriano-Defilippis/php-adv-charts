@@ -13,6 +13,9 @@
     <!-- JS: MOMENT -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
 
+    <!-- JS: CHART JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+
     <!-- JS: HANDLEBARS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js" charset="utf-8"></script>
     <!-- TEMPLATE: MESSAGE MENU -->
@@ -40,17 +43,16 @@
 
   <!-- BODY -->
   <body>
+   
 
-    
-    <?php 
-
-       var_dump($data);
-       echo "<br><br>";
-       var_dump ($graphs);
-
-    ?>
+    <div class="container">
+      <div class="myCanvas">
+        <canvas id="myChart1"></canvas>
+      </div>
 
 
+
+    </div>
 
             
 
