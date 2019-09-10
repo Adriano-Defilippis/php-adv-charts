@@ -89,7 +89,7 @@ function step_3() {
 
         success: function(data){
 
-            console.log("Oggetto fatturato", data.fatturato);
+            console.log("Oggetto fatturato dd", data);
             console.log("Oggetto fatturato_by_agent", data.fatturato_by_agent);
 
            var fatt_month = data.fatturato;
@@ -138,6 +138,41 @@ function step_3() {
     });
 
 }
+
+function step_3copy() {
+    
+    $.ajax({
+
+        url: "api_chart3.php",
+        method: "GET",
+
+        success: function(data){
+
+            
+            console.log("terzo step", data);
+            
+           
+           /* Controllo js per usare la funzione in base al 
+           tipo di grafico specificato nell'oggetto json */
+           
+/*             printChartLine(fatt_month.data, 'step3_chart1');
+           
+            printChartPie(name_agents, fatt_agent, 'step3_chart2');
+
+            printChart3Line(team_efficency_data, 'step3_chart3');
+ */            
+        
+             
+        
+        },
+        error: function(err){
+            console.log("errore api grafico 1");
+            
+        }
+    });
+
+}
+
 
 function printChartLine(data, id){
 
@@ -307,11 +342,13 @@ function printChart3Line(object, id){
 
 
 function init() {
-    console.log("Hello World");
-   step_1(); 
-   step_2();
-   step_3();
 
+        
+    step_1(); 
+    step_2();
+    step_3();
+/*     step_3copy();
+ */
 }
 
 $(document).ready(init);
