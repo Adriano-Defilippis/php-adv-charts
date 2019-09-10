@@ -69,6 +69,10 @@
         <canvas id="step3_chart2"></canvas>
       </div>
 
+      <div class="myCanvas">
+        <canvas id="step3_chart3"></canvas>
+      </div>
+
     </div>
 
             
