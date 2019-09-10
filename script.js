@@ -5,7 +5,7 @@ function getMonth(){
     return months
   }
 
-function getGraph1(){
+function step_1(){
 
     $.ajax({
 
@@ -17,7 +17,7 @@ function getGraph1(){
             console.log("succes graph 1!");
             console.log("data", data);
 
-            printChartLine(data);
+            printChartLine(data, 'step1_chart');
         
         },
         error: function(err){
@@ -27,7 +27,7 @@ function getGraph1(){
     });
 }
 
-function getGraph2(){
+function step_2(){
 
     $.ajax({
 
@@ -41,19 +41,36 @@ function getGraph2(){
 
            var fatt_month = data.fatturato;
            var fatt_by_agent = data.fatturato_by_agent;
+           var name_agents = [];
+           var fatt_agent = [];
+           var obj_fatt_by_agent = fatt_by_agent.data;
+
+           console.log("agenti: ",fatt_by_agent.data );
+
+           /* Ricavo i due array nnomi e fatturato dall oggetto 
+           contenuto nell'array restituito da ajax */
+           for (const name in obj_fatt_by_agent) {
+               if (obj_fatt_by_agent.hasOwnProperty(name)) {
+                   const fatturato = obj_fatt_by_agent[name];
+                    
+                    name_agents.push(name);
+                    fatt_agent.push(fatturato);
+               }
+           }
+           
+           console.log("arr fatt name", name_agents, fatt_agent);
+
            
            /* Controllo js per usare la funzione in base al 
            tipo di grafico specificato nell'oggetto json */
-           if (fatt_month.type == "line" || fatt_by_agent == "line") {
-                
-                printChartLine(fatt_month.data);
-
-           }else if(fatt_month.type == "pie" || fatt_by_agent == "pie"){
-
-                printChartPie(fatt_by_agent.data);
-           }
            
+            printChartLine(fatt_month.data, 'step2_chart1');
+           
+            printChartPie(name_agents, fatt_agent, 'step2_chart2');
+            console.log("PIE");
             
+        
+             
         
         },
         error: function(err){
@@ -63,9 +80,9 @@ function getGraph2(){
     });
 }
 
-function printChartLine(data){
+function printChartLine(data, id){
 
-    var ctx = document.getElementById('myChart1').getContext('2d');
+    var ctx = document.getElementById(id).getContext('2d');
     var chart = new Chart(ctx, {
       // The type of chart we want to create
       type: 'line',
@@ -98,15 +115,63 @@ function printChartLine(data){
   });
 }
 
-function printChartPie(data){
+function printChartPie(labels, data, id){
 
-    /* TO DO....... */
+    var ctx = document.getElementById(id).getContext('2d');
+    var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: 'pie',
+  
+      // The data for our dataset
+      data: {
+          labels: labels,
+          datasets: [{
+  
+              backgroundColor: ['lightblue',
+                                'lightgreen',
+                                'lightpink',
+                                'lightgrey',
+                                'lightbrown',
+                                'orange',
+                                'blue',
+                                'grey',
+                                'green'],
+              borderColor: 'rgba(255, 99, 132, 0.3)',
+              data: data,
+  
+          }]
+  
+      },
+  
+      // Configuration options go here
+      options: {
+  
+              // rotation: -Math.PI,
+              cutoutPercentage: 30,
+              // circumference: Math.PI,
+              legend: {
+                display: true,
+                position: 'left',
+              },
+              title: {
+                display: true,
+                text: 'VENDITE TOTALI PER OGNI VENDITORE SU BASE ANNUA',
+                position: 'top',
+                fontSize: 24,
+              },
+              animation: {
+                animateRotate: true,
+                animateScale: true
+              }
+            }
+  
+  });
 }
 
 function init() {
     console.log("Hello World");
-   /*  getGraph1(); */
-    getGraph2();
+   step_1(); 
+   step_2();
 
 }
 

@@ -46,12 +46,27 @@
    
 
     <div class="container">
+      <h1>STEP 1</h1>
       <div class="myCanvas">
-        <canvas id="myChart1"></canvas>
+        <canvas id="step1_chart"></canvas>
+      </div>
+
+      <h1>STEP 2</h1>
+      <div class="myCanvas">
+        <canvas id="step2_chart1"></canvas>
       </div>
 
       <div class="myCanvas">
-        <canvas id="myChart2"></canvas>
+        <canvas id="step2_chart2"></canvas>
+      </div>
+
+      <h1>STEP 3</h1>
+      <div class="myCanvas">
+        <canvas id="step3_chart1"></canvas>
+      </div>
+
+      <div class="myCanvas">
+        <canvas id="step3_chart2"></canvas>
       </div>
 
     </div>
