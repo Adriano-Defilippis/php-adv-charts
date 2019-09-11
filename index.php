@@ -64,6 +64,9 @@
       </div>
 
       <h1>STEP 3</h1>
+      <h2>Per visualizzare i grafici occorre completare l'url con la query da inviare a php<br>
+      Secondo Quanto segue: localhost/index.php?level=...., ed indicare il levello del permesso</h2>
+      <h3>guest - employee - clevel:</h3>
       <div class="myCanvas">
         <canvas id="step3_chart1"></canvas>
       </div>

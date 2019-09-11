@@ -26,6 +26,11 @@ body{
   font-size: 2em;
 }
 
+.container h2, 
+.container h3{
+  text-align: center;
+}
+
 .myCanvas{
   margin: 100px auto;
 
