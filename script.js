@@ -16,6 +16,18 @@ function step_1(){
 
             console.log("succes graph 1!");
             console.log("data", data);
+            console.log(typeof(data));
+
+            /* for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    const el = data[key];
+                    console.log("key", el, key);
+                    console.log("lunghezza data", data.length);
+                    
+                    
+                }
+            } */
+
 
             printChartLine(data, 'step1_chart');
         
@@ -148,9 +160,34 @@ function step_3copy() {
 
         success: function(data){
 
+            var name_agents = [];
+            var fatt_agent = [];
+            var dataof_json = data.data;
+            var type = data.type;
+ 
+            console.log("terzo step", dataof_json ,type);
+
+            console.log("type of di data",typeof(dataof_json));
             
-            console.log("terzo step", data);
-            
+
+            if (type === 'pie') {
+
+                /* Ricavo i due array nnomi e fatturato dall oggetto 
+                contenuto nell'array restituito da ajax, per le labels 
+                ed i dati del grafico */
+                for (const name in dataof_json) {
+                    if (dataof_json.hasOwnProperty(name)) {
+                        const fatturato = dataof_json[name];
+                            
+                            name_agents.push(name);
+                            fatt_agent.push(fatturato);
+                            console.log('array', name_agents, fatt_agent);
+                            
+                    }
+                }
+
+                printChartPie(name_agents, fatt_agent, 'step3_chart2');
+            }
            
            /* Controllo js per usare la funzione in base al 
            tipo di grafico specificato nell'oggetto json */
@@ -345,10 +382,10 @@ function init() {
 
         
     step_1(); 
-    step_2();
-    step_3();
-/*     step_3copy();
- */
+    step_2();       
+/*     step_3();
+ */    step_3copy();
+ 
 }
 
 $(document).ready(init);
