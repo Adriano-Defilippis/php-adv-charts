@@ -14,21 +14,7 @@ function step_1(){
 
         success: function(data){
 
-            console.log("succes graph 1!");
             console.log("data", data);
-            console.log(typeof(data));
-
-            /* for (const key in data) {
-                if (data.hasOwnProperty(key)) {
-                    const el = data[key];
-                    console.log("key", el, key);
-                    console.log("lunghezza data", data.length);
-                    
-                    
-                }
-            } */
-
-
             printChartLine(data, 'step1_chart');
         
         },
@@ -67,66 +53,8 @@ function step_2(){
     });
 }
 
+
 function step_3() {
-    
-    $.ajax({
-
-        url: "api_chart2.php",
-        method: "GET",
-
-        success: function(data){
-
-            console.log("Oggetto fatturato dd", data);
-            console.log("Oggetto fatturato_by_agent", data.fatturato_by_agent);
-
-           var fatt_month = data.fatturato;
-           var fatt_by_agent = data.fatturato_by_agent;
-           var team_efficency = data.team_efficiency;
-           var team_efficency_data = team_efficency.data;
-           
-           var name_agents = [];
-           var fatt_agent = [];
-
-           var obj_fatt_by_agent = fatt_by_agent.data;
-
-           /* Ricavo i due array nnomi e fatturato dall oggetto 
-           contenuto nell'array restituito da ajax */
-           for (const name in obj_fatt_by_agent) {
-               if (obj_fatt_by_agent.hasOwnProperty(name)) {
-                   const fatturato = obj_fatt_by_agent[name];
-                    
-                    name_agents.push(name);
-                    fatt_agent.push(fatturato);
-               }
-           }
-           
-           
-            console.log("arr fatt name", name_agents, fatt_agent);
-            console.log("TEAM OBJ", team_efficency.data);
-            
-           
-           /* Controllo js per usare la funzione in base al 
-           tipo di grafico specificato nell'oggetto json */
-           
-            printChartLine(fatt_month.data, 'step3_chart1');
-           
-            printChartPie(name_agents, fatt_agent, 'step3_chart2');
-
-            printChart3Line(team_efficency_data, 'step3_chart3');
-            
-        
-             
-        
-        },
-        error: function(err){
-            console.log("errore api grafico 1");
-            
-        }
-    });
-
-}
-
-function step_3copy() {
     
     /* Variabile per ricavare dall'url i dati inseriti come parametri
     da inviare a php come permessi per visualizzare il grafico */
@@ -166,7 +94,7 @@ function step_3copy() {
                 switch (el.type) {
                     case 'line':
 
-                        switch (el.access) {
+                         switch (el.access) {
                             case "guest":
                                 
                                 $('#step3_chart1').siblings('h1').remove();
@@ -197,8 +125,8 @@ function step_3copy() {
                 
                     default:
                         break;
-                }
-                
+                } 
+
             }
         
         },
@@ -396,8 +324,7 @@ function init() {
 
     step_1(); 
     step_2();       
-/*     step_3();
- */    step_3copy();
+    step_3();
  
 }
 
