@@ -65,18 +65,22 @@
 
       <h1>STEP 3</h1>
       <h2>Per visualizzare i grafici occorre completare l'url con la query da inviare a php<br>
-      Secondo Quanto segue: localhost/index.php?level=...., ed indicare il levello del permesso</h2>
+      Secondo Quanto segue: localhost/index.php?level=...., ed indicare il levello del permesso:</h2>
       <h3>guest - employee - clevel:</h3>
       <div class="myCanvas">
+        <h1>Non hai i permessi per vedere questo widget</h1>
         <canvas id="step3_chart1" ></canvas>
       </div>
 
       <div class="myCanvas">
+        <h1>Non hai i permessi per vedere questo widget</h1>
         <canvas id="step3_chart2"></canvas>
       </div>
 
       <div class="myCanvas">
-        <canvas id="step3_chart3"></canvas>
+        <h1>Non hai i permessi per vedere questo widget</h1>
+        <canvas id="step3_chart3">
+        </canvas>
       </div>
 
     </div>

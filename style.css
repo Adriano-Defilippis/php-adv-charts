@@ -54,3 +54,7 @@ body{
 canvas{
   padding: 25px 50px;
 }
+
+h1.display_block{
+  display: none;
+}

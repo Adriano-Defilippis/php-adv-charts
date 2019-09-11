@@ -169,21 +169,17 @@ function step_3copy() {
                         switch (el.access) {
                             case "guest":
                                 
+                                $('#step3_chart1').siblings('h1').remove();
                                 printChartLine(el.data, 'step3_chart1');
-                                $('#step3_chart3').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                                $('#step3_chart2').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
                             break;
 
                             case "clevel":
-                                $('#step3_chart1').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                                $('#step3_chart2').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
+
+                                $('#step3_chart3').siblings('h1').remove();
                                 printChart3Line(el.data, 'step3_chart3');
                             break;
 
                             default:
-                                    $('#step3_chart1').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                                    $('#step3_chart2').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                                    $('#step3_chart3').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
                                 break;
                         
                         }
@@ -194,68 +190,14 @@ function step_3copy() {
 
                         if (el.access == 'employee') {
                             
-                            console.log("children", $('#step3_chart2').siblings().remove());
-                            $('#step3_chart2').siblings().remove()
+                            $('#step3_chart2').siblings('h1').remove();
                             printChartPie(el.data, 'step3_chart2');
 
-                            $('#step3_chart1').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                            $('#step3_chart3').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
                         }
                 
                     default:
-                            $('#step3_chart1').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                            $('#step3_chart2').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                            $('#step3_chart3').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
                         break;
                 }
-
-
-
-                /* switch (el.type) {
-                    case 'line':
-
-                        switch (access_param_url) {
-                            case "guest":
-                                
-                                printChartLine(el.data, 'step3_chart1');
-                                $('#step3_chart3').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                                $('#step3_chart2').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                            break;
-
-                            case "clevel":
-                                $('#step3_chart1').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                                $('#step3_chart2').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                                printChart3Line(el.data, 'step3_chart3');
-                            break;
-
-                            default:
-                                    $('#step3_chart1').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                                    $('#step3_chart2').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                                    $('#step3_chart3').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                                break;
-                        
-                        }
-                        
-                    break;
-
-                    case 'pie':
-
-                        if (access_param_url == 'employee') {
-                            
-                            console.log("children", $('#step3_chart2').siblings().remove());
-                            $('#step3_chart2').siblings().remove()
-                            printChartPie(el.data, 'step3_chart2');
-
-                            $('#step3_chart1').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                            $('#step3_chart3').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                        }
-                
-                    default:
-                            $('#step3_chart1').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                            $('#step3_chart2').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                            $('#step3_chart3').parent().append("<h1>Non hai i permessi per vedere questo widget</h1>");
-                        break;
-                } */
                 
             }
         
