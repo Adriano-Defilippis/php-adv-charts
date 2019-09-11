@@ -46,6 +46,9 @@
    
 
     <div class="container">
+
+      <div class="results"></div>
+
       <h1>STEP 1</h1>
       <div class="myCanvas">
         <canvas id="step1_chart"></canvas>

@@ -1,15 +1,21 @@
 <?php 
 
     include 'database.php';
+    header('Content-type: application/json');
+    $level = $_GET['level'];
+
+    $resAp = [];
 
     foreach ($graphs as $graph) {
-        $graph['access'];
-
-        if ($graph['access'] == 'rr') {
+      
+        if ($graph['access'] == $level) {
             
-            header('Content-type: application/json');
-            echo json_encode($graph);
+            $resAp[] = $graph;
+            
         }
     }
+
+
+    echo json_encode($resAp);
     
 ?>

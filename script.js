@@ -48,41 +48,16 @@ function step_2(){
 
         success: function(data){
 
-            console.log("Oggetto fatturato", data.fatturato);
-            console.log("Oggetto fatturato_by_agent", data.fatturato_by_agent);
-
-           var fatt_month = data.fatturato;
-           var fatt_by_agent = data.fatturato_by_agent;
-           var name_agents = [];
-           var fatt_agent = [];
-           var obj_fatt_by_agent = fatt_by_agent.data;
-
-           console.log("agenti: ",fatt_by_agent.data );
-
-           /* Ricavo i due array nnomi e fatturato dall oggetto 
-           contenuto nell'array restituito da ajax */
-           for (const name in obj_fatt_by_agent) {
-               if (obj_fatt_by_agent.hasOwnProperty(name)) {
-                   const fatturato = obj_fatt_by_agent[name];
-                    
-                    name_agents.push(name);
-                    fatt_agent.push(fatturato);
-               }
-           }
+            console.log("Oggetto fatturato", data.fatturato_by_agent.data);
            
-           console.log("arr fatt name", name_agents, fatt_agent);
 
-           
-           /* Controllo js per usare la funzione in base al 
-           tipo di grafico specificato nell'oggetto json */
-           
+            var fatt_month = data.fatturato;
+            var fatt_by_agent = data.fatturato_by_agent;
+            var obj_fatt_by_agent = fatt_by_agent.data;
+
             printChartLine(fatt_month.data, 'step2_chart1');
-           
-            printChartPie(name_agents, fatt_agent, 'step2_chart2');
-            console.log("PIE");
             
-        
-             
+            printChartPie(obj_fatt_by_agent, 'step2_chart2');   
         
         },
         error: function(err){
@@ -153,10 +128,28 @@ function step_3() {
 
 function step_3copy() {
     
+    /* var permise = {
+        "level" : "guest",
+        "level" : "employee",
+        "level" : "clevel"
+    }; */
+    
+/*     console.log("permise", permise);
+ */ 
+    var level = "guest";
+    var window_location_for_query = window.location.search;
+
+    console.log("window location", window.location.search);
+    
+    
     $.ajax({
 
-        url: "api_chart3.php",
+        url: "api_chart3.php" + window_location_for_query,
         method: "GET",
+        
+        complete: function(){
+            alert(this.url);
+        },
 
         success: function(data){
 
@@ -165,41 +158,31 @@ function step_3copy() {
             var dataof_json = data.data;
             var type = data.type;
  
-            console.log("terzo step", dataof_json ,type);
+            console.log("3", data);
 
-            console.log("type of di data",typeof(dataof_json));
-            
+            /* Il Ciclo mi permette di ciclare l'array con i grafici restituiti da php in base alla query dei permessi */
+            for (let i = 0; i < data.length; i++) {
+                const el = data[i];
 
-            if (type === 'pie') {
+                console.log("data[i]", el);
+                /* ogni oggetto dell'array viene ciclato per recuperari i dati necessari a Chart.js */
+                console.log('data l', el.data);
 
-                /* Ricavo i due array nnomi e fatturato dall oggetto 
-                contenuto nell'array restituito da ajax, per le labels 
-                ed i dati del grafico */
-                for (const name in dataof_json) {
-                    if (dataof_json.hasOwnProperty(name)) {
-                        const fatturato = dataof_json[name];
-                            
-                            name_agents.push(name);
-                            fatt_agent.push(fatturato);
-                            console.log('array', name_agents, fatt_agent);
-                            
-                    }
+                if (el.type == 'line') {
+                    printChartLine(el.data, 'step3_chart1');
+                    
+                    printChart3Line(el.data, 'step3_chart3');
+                    console.log("PIE permesso", el.data, el.access, window_location_for_query.includes(el.access));
                 }
+                if (el.type == 'pie') {
 
-                printChartPie(name_agents, fatt_agent, 'step3_chart2');
+                    console.log("PIE permesso", el.data, el.access);
+                    
+                    printChartPie(el.data, 'step3_chart2');
+                }
+                
+                
             }
-           
-           /* Controllo js per usare la funzione in base al 
-           tipo di grafico specificato nell'oggetto json */
-           
-/*             printChartLine(fatt_month.data, 'step3_chart1');
-           
-            printChartPie(name_agents, fatt_agent, 'step3_chart2');
-
-            printChart3Line(team_efficency_data, 'step3_chart3');
- */            
-        
-             
         
         },
         error: function(err){
@@ -247,7 +230,21 @@ function printChartLine(data, id){
   });
 }
 
-function printChartPie(labels, data, id){
+function printChartPie(obj, id){
+
+    var name_agents = [];
+    var fatt_agent = [];
+
+    /* Ricavo i due array nnomi e fatturato dall oggetto 
+    contenuto nell'array restituito da ajax */
+    for (const name in obj) {
+        if (obj.hasOwnProperty(name)) {
+            const fatturato = obj[name];
+                
+                name_agents.push(name);
+                fatt_agent.push(fatturato);
+        }
+    }
 
     var ctx = document.getElementById(id).getContext('2d');
     var chart = new Chart(ctx, {
@@ -256,7 +253,7 @@ function printChartPie(labels, data, id){
   
       // The data for our dataset
       data: {
-          labels: labels,
+          labels: name_agents,
           datasets: [{
   
               backgroundColor: ['lightblue',
@@ -269,7 +266,7 @@ function printChartPie(labels, data, id){
                                 'grey',
                                 'green'],
               borderColor: 'rgba(255, 99, 132, 0.3)',
-              data: data,
+              data: fatt_agent,
   
           }]
   
@@ -380,7 +377,6 @@ function printChart3Line(object, id){
 
 function init() {
 
-        
     step_1(); 
     step_2();       
 /*     step_3();
