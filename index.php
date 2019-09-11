@@ -68,7 +68,7 @@
       Secondo Quanto segue: localhost/index.php?level=...., ed indicare il levello del permesso</h2>
       <h3>guest - employee - clevel:</h3>
       <div class="myCanvas">
-        <canvas id="step3_chart1"></canvas>
+        <canvas id="step3_chart1" ></canvas>
       </div>
 
       <div class="myCanvas">
