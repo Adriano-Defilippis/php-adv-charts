@@ -43,45 +43,68 @@
 
   <!-- BODY -->
   <body>
-   
+    <header>
+      <div class="logo">
+        <i class="fab fa-js-square fa-4x"></i>
+        <img src="img/JQuery.png" alt="ajax.png">
+        <img src="img/ajax.png" alt="ajax.png">
+        <i class="fab fa-php fa-4x"></i>
+        
+      </div>
+    </header>
 
     <div class="container">
+      
 
-      <div class="results"></div>
+      <section>
+        <h1>STEP 1</h1>
+        <h2>Una chiamata Ajax a file .php, ritorna un oggetto Json con un singolo Array <br>
+            Array Mesi generato con libreria Moment.js</h2>
+        <div class="myCanvas">
+          <canvas id="step1_chart"></canvas>
+        </div>
+        
+      </section>
+      <hr>
+      <section>
+        <h1>STEP 2</h1>
+        <h2>Una chiamata Ajax ritorna un oggetto Json con due Array <br>
+            L'oggetto viene elaborato per estrapolare i data per Chart.Js</h2>
+        <div class="myCanvas">
+          <canvas id="step2_chart1"></canvas>
+        </div>
+      
 
-      <h1>STEP 1</h1>
-      <div class="myCanvas">
-        <canvas id="step1_chart"></canvas>
-      </div>
+        <div class="myCanvas">
+          <canvas id="step2_chart2"></canvas>
+        </div>
+        
+      </section>
+      <hr>
+      <section>
+        <h1>STEP 3</h1>
+        <h2>JS elabora i parametri passati nell'url per creare l'oggetto data della chiamata ajax JQuery<br>
+            che chiede al file php l'invio di dati in base alla chiave access di questi ultimi passata come parametro: <br> ?level=guest/employee/clevel</h2>
+        <h3>Per visualizzare i grafici occorre completare l'url con la query da inviare a php<br>
+        Secondo Quanto segue: localhost/index.php?level=...., ed indicare il livello del permesso:</h3>
+        <h3>guest - employee - clevel:</h3>
+        <div class="myCanvas">
+          <h1>Non hai i permessi per vedere questo widget</h1>
+          <canvas id="step3_chart1" ></canvas>
+        </div>
 
-      <h1>STEP 2</h1>
-      <div class="myCanvas">
-        <canvas id="step2_chart1"></canvas>
-      </div>
+        <div class="myCanvas">
+          <h1>Non hai i permessi per vedere questo widget</h1>
+          <canvas id="step3_chart2"></canvas>
+        </div>
 
-      <div class="myCanvas">
-        <canvas id="step2_chart2"></canvas>
-      </div>
-
-      <h1>STEP 3</h1>
-      <h2>Per visualizzare i grafici occorre completare l'url con la query da inviare a php<br>
-      Secondo Quanto segue: localhost/index.php?level=...., ed indicare il levello del permesso:</h2>
-      <h3>guest - employee - clevel:</h3>
-      <div class="myCanvas">
-        <h1>Non hai i permessi per vedere questo widget</h1>
-        <canvas id="step3_chart1" ></canvas>
-      </div>
-
-      <div class="myCanvas">
-        <h1>Non hai i permessi per vedere questo widget</h1>
-        <canvas id="step3_chart2"></canvas>
-      </div>
-
-      <div class="myCanvas">
-        <h1>Non hai i permessi per vedere questo widget</h1>
-        <canvas id="step3_chart3">
-        </canvas>
-      </div>
+        <div class="myCanvas">
+          <h1>Non hai i permessi per vedere questo widget</h1>
+          <canvas id="step3_chart3">
+          </canvas>
+        </div>
+      
+      </section>
 
     </div>
 

@@ -7,18 +7,45 @@
 
   user-select: none;
   list-style: none;
+  color: #81766c;
 }
 body{
   background-color: lightgrey;
+}
+
+header{
+  display: flex;
+
+  max-height: 75px;
+
+  background-color: #81766c;
+
+  padding: 0 20px;
+}
+
+header .logo >*{
+  margin-right: 20px;
+}
+
+header img{
+  max-width: 75px;
+}
+
+header .logo{
+  display: flex;
+  justify-items: center;
+}
+
+header i{
+  color: white;
 }
 .container {
 
   width: 80%;
   margin: 0 auto;
+  padding: 50px;
 
-  padding: 50px 25px;
-
-  background-color: lightslategray;
+  background-color: lightgrey;
 }
 
 .container h1{
@@ -31,8 +58,17 @@ body{
   text-align: center;
 }
 
+section{
+  margin-bottom: 100px;
+}
+
+section h1,
+section h2,
+section h3{
+  margin-top: 20px;
+}
 .myCanvas{
-  margin: 100px auto;
+  margin: 50px auto;
 
   width: 80%;
   height: auto;
@@ -40,11 +76,13 @@ body{
   background-color: lightgrey;
 
   position: relative;
+
+  border: solid 2px #81766c;
 }
 
 .myCanvas h1{
   text-align: center;
-
+  margin-top: 0px;
   position: absolute;
   top: calc(50%);
   left: 50%;

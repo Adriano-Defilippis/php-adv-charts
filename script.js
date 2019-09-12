@@ -82,13 +82,6 @@ function step_3() {
             for (let i = 0; i < data.length; i++) {
                 const el = data[i];
 
-                console.log("data[i]", el);
-                /* ogni oggetto dell'array viene ciclato per recuperari i dati necessari a Chart.js */
-                console.log('data l', el.data);
-
-                console.log("type of", typeof(el.data), (el.data.length));
-                
-
                 /* STAMPO IN BASE ALLA PRESENZA DEL DATO, ED IN BASE AL TIPO  */
                 if (el) {
                     switch (el.type) {
@@ -112,49 +105,6 @@ function step_3() {
                 } 
 
             }
-
-
-            
-
-
-
-                /* switch (el.type) {
-                    case 'line':
-
-                         switch (el.access) {
-                            case "guest":
-                                
-                                $('#step3_chart1').siblings('h1').remove();
-                                printChartLine(el.data, 'step3_chart1');
-                            break;
-
-                            case "clevel":
-
-                                $('#step3_chart3').siblings('h1').remove();
-                                printChart3Line(el.data, 'step3_chart3');
-                            break;
-
-                            default:
-                                break;
-                        
-                        }
-                        
-                    break;
-
-                    case 'pie':
-
-                        if (el.access == 'employee') {
-                            
-                            $('#step3_chart2').siblings('h1').remove();
-                            printChartPie(el.data, 'step3_chart2');
-
-                        }
-                
-                    default:
-                        break;
-                } 
-
-            } */
         
         },
         error: function(err){
