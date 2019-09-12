@@ -60,27 +60,23 @@ function step_3() {
     da inviare a php come permessi per visualizzare il grafico */
     var window_location_for_query = window.location.search;
 
-    var arr_parameter_url = window.location.search.split("=");
+    var parameter_url = window_location_for_query.replace("?", "");
+    var arr_parameter_url = parameter_url.split("=");
     
-    console.log("window location", window.location.search);    
+    var value_parameter = arr_parameter_url[1];
+    
+    console.log("window location", arr_parameter_url, value_parameter); 
+    var data = {"level" : value_parameter};   
+    console.log("query",data );
+    
     
     $.ajax({
 
-        url: "api_chart3.php" + window_location_for_query,
+        url: "api_chart3.php",
         method: "GET",
+        data: data,
         
-        complete: function(){
-            alert(this.url);
-        },
-
         success: function(data){
-
-            var name_agents = [];
-            var fatt_agent = [];
-            var dataof_json = data.data;
-            var type = data.type;
- 
-            console.log("3", data);
 
             /* Il Ciclo mi permette di ciclare l'array con i grafici restituiti da php in base alla query dei permessi */
             for (let i = 0; i < data.length; i++) {
@@ -186,15 +182,6 @@ function printChartPie(obj, id){
     var fatt_agent = Object.values(obj);
 
 
-    /* for (const name in obj) {
-        if (obj.hasOwnProperty(name)) {
-            const fatturato = obj[name];
-                
-                name_agents.push(name);
-                fatt_agent.push(fatturato);
-        }
-    } */
-
     var ctx = document.getElementById(id).getContext('2d');
     var chart = new Chart(ctx, {
       // The type of chart we want to create
@@ -246,23 +233,39 @@ function printChartPie(obj, id){
   });
 }
 /* L'oggetto contiene array con 3 label, ed array con 3 data */
-function printChart3Line(object, id){
+function printChart3Line(obj, id){
 
-    var name_team = [];
-    var fatt_team = [];
+    /* Ricavo i due array nnomi e fatturato dall oggetto 
+    contenuto nell'array restituito da ajax */
+    var name_team = Object.keys(obj);
+    var fatt_team = Object.values(obj);
 
-        
-    for (const team in object) {
-        if (object.hasOwnProperty(team)) {
-            const el = object[team];
+    console.log("fatt_team" , fatt_team);
 
-            name_team.push(team);
-            fatt_team.push(el);
-            
-        }
-        console.log("TEAM", name_team);
-        console.log("FATT TEAM", fatt_team);
+
+
+
+    /* Dataset vuoto da riempire con gli oggeti generati a seconda della 
+    lunghezza dell'Array contenente in numero di team */
+    /* var mydatasets = new Array();
+
+    for (let i = 0; i < name_team.length; i++) {
+        const el = name_team[i];
+        var n_rand = Math.floor(Math.random() * 500);
+
+        var new_obj_mydatasets = new Object();
+
+        new_obj_mydatasets.label = el;
+        new_obj_mydatasets.backgroundColor = 'rgba('+ n_rand +', '+ n_rand +', '+ n_rand +', 0.0 )';
+        new_obj_mydatasets.borderColor = 'rgba('+ n_rand +', '+ n_rand +', '+ n_rand +', 0.0 )';
+        new_obj_mydatasets.data = fatt_team[i];
+
+        mydatasets.push(new_obj_mydatasets);
     }
+
+    console.log("mydatasets" , mydatasets, n_rand); */
+    
+
 
 
     /* Preparo template di Chart.js */
