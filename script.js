@@ -177,19 +177,23 @@ function printChartLine(data, id){
 
 function printChartPie(obj, id){
 
-    var name_agents = [];
-    var fatt_agent = [];
+    /* var name_agents = [];
+    var fatt_agent = []; */
 
     /* Ricavo i due array nnomi e fatturato dall oggetto 
     contenuto nell'array restituito da ajax */
-    for (const name in obj) {
+    var name_agents = Object.keys(obj);
+    var fatt_agent = Object.values(obj);
+
+
+    /* for (const name in obj) {
         if (obj.hasOwnProperty(name)) {
             const fatturato = obj[name];
                 
                 name_agents.push(name);
                 fatt_agent.push(fatturato);
         }
-    }
+    } */
 
     var ctx = document.getElementById(id).getContext('2d');
     var chart = new Chart(ctx, {
