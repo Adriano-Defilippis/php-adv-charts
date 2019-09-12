@@ -86,8 +86,39 @@ function step_3() {
                 /* ogni oggetto dell'array viene ciclato per recuperari i dati necessari a Chart.js */
                 console.log('data l', el.data);
 
-                /* STAMPO IN BASE AL TIPO ED AI PERMESSI */
-                switch (el.type) {
+                console.log("type of", typeof(el.data), (el.data.length));
+                
+
+                /* STAMPO IN BASE ALLA PRESENZA DEL DATO, ED IN BASE AL TIPO  */
+                if (el) {
+                    switch (el.type) {
+                        case "line":
+                            if (el.data.length > 0) {
+                                $('#step3_chart1').siblings('h1').remove();
+                                printChartLine(el.data, 'step3_chart1');
+                            }else{
+                                $('#step3_chart3').siblings('h1').remove();
+                                printChart3Line(el.data, 'step3_chart3');
+                            }
+                            break;
+    
+                        case "pie":
+                            
+                            $('#step3_chart2').siblings('h1').remove();
+                            printChartPie(el.data, 'step3_chart2');
+                        default:
+                            break;
+                    }
+                } 
+
+            }
+
+
+            
+
+
+
+                /* switch (el.type) {
                     case 'line':
 
                          switch (el.access) {
@@ -123,7 +154,7 @@ function step_3() {
                         break;
                 } 
 
-            }
+            } */
         
         },
         error: function(err){
