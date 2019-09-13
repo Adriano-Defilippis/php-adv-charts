@@ -3,164 +3,115 @@ function getMonth(){
     var months = moment.months();
   
     return months
-  }
-
-function step_1(){
-
-    $.ajax({
-
-        url: "api_chart1.php",
-        method: "GET",
-
-        success: function(data){
-
-            console.log("data", data);
-            printChartLine(data, 'step1_chart');
-        
-        },
-        error: function(err){
-            console.log("errore api grafico 1");
-            
-        }
-    });
 }
-
-function step_2(){
-
-    $.ajax({
-
-        url: "api_chart2.php",
-        method: "GET",
-
-        success: function(data){
-
-            console.log("Oggetto fatturato", data.fatturato_by_agent.data);
-           
-
-            var fatt_month = data.fatturato;
-            var fatt_by_agent = data.fatturato_by_agent;
-            var obj_fatt_by_agent = fatt_by_agent.data;
-
-            printChartLine(fatt_month.data, 'step2_chart1');
-            
-            printChartPie(obj_fatt_by_agent, 'step2_chart2');   
-        
-        },
-        error: function(err){
-            console.log("errore api grafico 1");
-            
-        }
-    });
-}
-
-
-function step_3() {
-    
-    /* Variabile per ricavare dall'url i dati inseriti come parametri
-    da inviare a php come permessi per visualizzare il grafico */
-    var window_location_for_query = window.location.search;
-
-    var parameter_url = window_location_for_query.replace("?", "");
-    var arr_parameter_url = parameter_url.split("=");
-    
-    var value_parameter = arr_parameter_url[1];
-    
-    console.log("window location", arr_parameter_url, value_parameter); 
-    var data = {"level" : value_parameter};   
-    console.log("query",data );
-    
-    
-    $.ajax({
-
-        url: "api_chart3.php",
-        method: "GET",
-        data: data,
-        
-        success: function(data){
-
-            /* Il Ciclo mi permette di ciclare l'array con i grafici restituiti da php in base alla query dei permessi */
-            for (let i = 0; i < data.length; i++) {
-                const el = data[i];
-
-                /* STAMPO IN BASE ALLA PRESENZA DEL DATO, ED IN BASE AL TIPO  */
-                if (el) {
-                    switch (el.type) {
-                        case "line":
-                            if (el.data.length > 0) {
-                                $('#step3_chart1').siblings('h1').remove();
-                                printChartLine(el.data, 'step3_chart1');
-                            }else{
-                                $('#step3_chart3').siblings('h1').remove();
-                                printChart3Line(el.data, 'step3_chart3');
-                            }
-                            break;
-    
-                        case "pie":
-                            
-                            $('#step3_chart2').siblings('h1').remove();
-                            printChartPie(el.data, 'step3_chart2');
-                        default:
-                            break;
-                    }
-                } 
-
-            }
-        
-        },
-        error: function(err){
-            console.log("errore api grafico 1");
-            
-        }
-    });
-
-}
-
 
 function printChartLine(data, id){
 
     var ctx = document.getElementById(id).getContext('2d');
-    var chart = new Chart(ctx, {
-      // The type of chart we want to create
-      type: 'line',
-  
-      // The data for our dataset
-      data: {
-          labels: getMonth(),
-          datasets: [{
-              label: "Volume D'affari",
-              backgroundColor: 'rgba(255, 99, 132, 0.4)',
-              borderColor: 'rgba(00, 00, 00, 0.4)',
-              data: data,
-  
-          }],
-          
-      },
-  
-      // Configuration options go here
-      options: {
-        title: {
-          display: true,
-          text: 'VENDITE TOTALI PER OGNI MESE',
-          fontSize: 28,
-          position: "left"
-        },
-        legend: {
-          display: true,
-          position: 'right',
-        },
-      }
-  });
+
+    if (Array.isArray(data)) {
+        printchartSingleLine(data, ctx);
+    }else{
+        printchartMultipleLine(data, ctx);
+    } 
 }
 
-function printChartPie(obj, id){
+function printchartSingleLine(data, ctx){
 
-    /* var name_agents = [];
-    var fatt_agent = []; */
+    new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+    
+        // The data for our dataset
+        data: {
+            labels: getMonth(),
+            datasets: [{
+                label: "Volume D'affari",
+                backgroundColor: 'rgba(255, 99, 132, 0.4)',
+                borderColor: 'rgba(00, 00, 00, 0.4)',
+                data: data,
+    
+            }],
+            
+        },
+    
+        // Configuration options go here
+        options: {
+          title: {
+            display: true,
+            text: 'VENDITE TOTALI PER OGNI MESE',
+            fontSize: 28,
+            position: "left"
+          },
+          legend: {
+            display: true,
+            position: 'right',
+          },
+        }
+    });
+}
 
+function printchartMultipleLine(data, ctx){
+
+    var label = Object.keys(data);
+    var arr_data = Object.values(data);
+
+    var datasets = [];
+
+    for (let i = 0; i < label.length; i++) {
+        const team_name = label[i];
+        const team_score = arr_data[i];
+
+        var rand = Math.floor(Math.random() * 500);
+
+        var rand_r = Math.floor(Math.random() * 500);
+        var rand_g = Math.floor(Math.random() * 500);
+        var rand_b = Math.floor(Math.random() * 500);
+
+        console.log(rand_r, rand_g);
+        
+        datasets.push({
+            label: team_name,
+            data: team_score,
+            backgroundColor: 'rgba(00, 00, 00, 0.0)',
+            borderColor: 'rgb('+rand_r+', '+rand_g+', '+rand_b+')',
+        });
+        
+    }
+    
+    new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+    
+        // The data for our dataset
+        data: {
+            labels: getMonth(),
+            datasets: datasets,   
+        },
+    
+        // Configuration options go here
+        options: {
+          title: {
+            display: true,
+            text: 'VENDITE TOTALI PER OGNI MESE',
+            fontSize: 28,
+            position: "left"
+          },
+          legend: {
+            display: true,
+            position: 'right',
+          },
+        }
+    });
+    
+}
+
+function printChartPie(data, id) {
+    
     /* Ricavo i due array nnomi e fatturato dall oggetto 
     contenuto nell'array restituito da ajax */
-    var name_agents = Object.keys(obj);
-    var fatt_agent = Object.values(obj);
+    var name_agents = Object.keys(data);
+    var fatt_agent = Object.values(data);
 
 
     var ctx = document.getElementById(id).getContext('2d');
@@ -213,106 +164,108 @@ function printChartPie(obj, id){
   
   });
 }
-/* L'oggetto contiene array con 3 label, ed array con 3 data */
-function printChart3Line(obj, id){
 
-    /* Ricavo i due array nnomi e fatturato dall oggetto 
-    contenuto nell'array restituito da ajax */
-    var name_team = Object.keys(obj);
-    var fatt_team = Object.values(obj);
+function step_3(){
 
-    console.log("fatt_team" , fatt_team);
+    var searchParams = new URLSearchParams(new URL(location.href).search);
+    alert(searchParams);
+    var level = searchParams.get('level');
+    var access = {"level": level};
 
+    $.ajax({
 
+        url: 'api_chart3.php',
+        method: 'GET',
+        data: access,
 
+        success: function(data){
+            console.log("DATA STEP 3", data);
+            var id_appendto = "";
+            /* Ciclo array risultati da php */
+            for (let i = 0; i < data.length; i++) {
+                const el = data[i];
+                
+                id_appendto = 'step3_chart' + (i + 1);
+                console.log("id", id_appendto);
+                
+                switch (el.type) {
+                    case 'line':
+                        $('#'+ id_appendto +'').siblings('h1').remove();
+                        printChartLine(el.data, id_appendto);
+                        break;
 
-    /* Dataset vuoto da riempire con gli oggeti generati a seconda della 
-    lunghezza dell'Array contenente in numero di team */
-    /* var mydatasets = new Array();
-
-    for (let i = 0; i < name_team.length; i++) {
-        const el = name_team[i];
-        var n_rand = Math.floor(Math.random() * 500);
-
-        var new_obj_mydatasets = new Object();
-
-        new_obj_mydatasets.label = el;
-        new_obj_mydatasets.backgroundColor = 'rgba('+ n_rand +', '+ n_rand +', '+ n_rand +', 0.0 )';
-        new_obj_mydatasets.borderColor = 'rgba('+ n_rand +', '+ n_rand +', '+ n_rand +', 0.0 )';
-        new_obj_mydatasets.data = fatt_team[i];
-
-        mydatasets.push(new_obj_mydatasets);
-    }
-
-    console.log("mydatasets" , mydatasets, n_rand); */
-    
-
-
-
-    /* Preparo template di Chart.js */
-    var ctx = document.getElementById(id).getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
-    
-        // The data for our dataset
-        data: {
-            labels: getMonth(),
-            datasets: [
-                {
-
-                label: name_team[0],
-                backgroundColor: 'rgba(00, 00, 00, 0.0)',
-                borderColor: 'rgba(30, 100, 234, 0.4)',
-                data: fatt_team[0],
-    
-                },
-                {
-
-                label: name_team[1],
-                backgroundColor: 'rgba(00, 00, 00, 0.0)',
-                borderColor: 'rgba(200, 490, 30, 0.4)',
-                data: fatt_team[1],
-        
-                },
-                {
-
-                label: name_team[2],
-                backgroundColor: 'rgba(00, 00, 00, 0.0)',
-                borderColor: 'rgba(400, 120, 290, 0.4)',
-                data: fatt_team[2],
-            
-                },
-            ],
+                    case 'pie':
+                        $('#'+ id_appendto +'').siblings('h1').remove();
+                        printChartPie(el.data, id_appendto);    
+                
+                    default:
+                        break;
+                }   
+                
+            }
             
         },
-    
-        // Configuration options go here
-        options: {
-            title: {
-            display: true,
-            text: 'VENDITE TEAM',
-            fontSize: 28,
-            position: "left"
-            },
-            legend: {
-            display: true,
-            position: 'right',
-            },
+        error: function(error){
+            console.log("error chiamata 3", error);
+            
         }
     });
-    
+}
+  
+function step_1(){
 
+    $.ajax({
+
+        url: "api_chart1.php",
+        method: "GET",
+
+        success: function(data){
+
+            console.log("data", data);
+            printChartLine(data, 'step1_chart');
         
-    
+        },
+        error: function(err){
+            console.log("errore api grafico 1");
+            
+        }
+    });
+}
+
+function step_2(){
+
+    $.ajax({
+
+        url: "api_chart2.php",
+        method: "GET",
+
+        success: function(data){
+
+            console.log("Oggetto fatturato", data.fatturato_by_agent.data);
+           
+
+            var fatt_month = data.fatturato;
+            var fatt_by_agent = data.fatturato_by_agent;
+            var obj_fatt_by_agent = fatt_by_agent.data;
+
+            printChartLine(fatt_month.data, 'step2_chart1');
+            
+            printChartPie(obj_fatt_by_agent, 'step2_chart2');   
+        
+        },
+        error: function(err){
+            console.log("errore api grafico 1");
+            
+        }
+    });
 }
 
 
 function init() {
 
     step_1(); 
-    step_2();       
-    step_3();
+    step_2();
+    step_3();       
  
 }
 
