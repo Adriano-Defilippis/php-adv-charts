@@ -168,7 +168,7 @@ function printChartPie(data, id) {
 function step_3(){
 
     var searchParams = new URLSearchParams(new URL(location.href).search);
-    alert(searchParams);
+    
     var level = searchParams.get('level');
     var access = {"level": level};
 
